@@ -1,6 +1,6 @@
 {
     
     "require": {
-        "postal/postal": "^1.0"
+        "postal/postal": "^2.0"
     }
 }
