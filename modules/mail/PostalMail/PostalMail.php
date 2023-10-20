@@ -62,7 +62,7 @@ class PostalMail implements SenderModuleInterface
         $client = new Postal\Client($params['server'], $params['api_key']);
 
         // Create a new message
-        $message = new Postal\SendMessage($client);
+        $message = new Postal\Send\Message();
 
         // Set the sender
         $message->sender($GLOBALS['CONFIG']['Email']);
@@ -85,9 +85,7 @@ class PostalMail implements SenderModuleInterface
         $message->htmlBody('<p>When you receive this email, it means that you can connect to this postal server.</p>');
 
         // Send the message and get the result
-        $result = $message->send();
-
-        return $result;
+        return $client->send->message($message);
     }
 
     /**
@@ -114,7 +112,7 @@ class PostalMail implements SenderModuleInterface
         $client = new Postal\Client($params['server'], $params['api_key']);
 
         // Create a new message
-        $sendMessage = new Postal\SendMessage($client);
+        $sendMessage = new Postal\Send\Message();
 
         // Retrieve recipients.
         foreach ($message->getRecipients('to') as $to) {
@@ -136,7 +134,7 @@ class PostalMail implements SenderModuleInterface
         $sendMessage->subject($subject);
 
         // Set the content for the e-mail
-        $sendMessage->plainBody($plainTextbody);
+        $sendMessage->plainBody($plainTextBody);
         $sendMessage->htmlBody($body);
 
         // Set the replyTo
@@ -152,8 +150,6 @@ class PostalMail implements SenderModuleInterface
         }
 
         // Send the message and get the result
-        $result = $sendMessage->send();
-
-        return $result;
+        $client->send->message($sendMessage);
     }
 }
